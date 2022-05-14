@@ -1,10 +1,13 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const CharacterCard = ({ data }) => {
+    const navigation = useNavigation();
 
     const handlePress = () => {
         console.log('CharacterCard id: ', data.id);
+        navigation.navigate('CharacterPage', { data: data });
     };
 
     return (

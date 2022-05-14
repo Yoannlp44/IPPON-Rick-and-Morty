@@ -54,6 +54,7 @@ const HomePage = () => {
   const [statusItem, setStatusItems] = useState(CharacterStatus);
   const [genderItem, setGenderItems] = useState(CharacterGender);
   const [page, setPage] = useState(1);
+  const scrollRef = useRef();
 
   const { loading, error, data } = useQuery(GET_CHARACTERS, {
     variables: { status, gender, page },
@@ -77,6 +78,16 @@ const HomePage = () => {
 
   console.log(loading, error, data);
 
+  const handleChangeFilter = () => {
+    setPage(1);
+    scrollRef.current.scrollTo({ y : 0, animated: true });
+  };
+  
+  const handleChangePage = (page) => {
+    setPage(page);
+    scrollRef.current.scrollTo({ y : 0, animated: true });
+  };
+
   return (
     <View style={styles.containerWrapper}>
       <SafeAreaView style={styles.container}>
@@ -84,31 +95,38 @@ const HomePage = () => {
           open={openStatusList}
           value={status !== '' ? status : 'Select the Status'}
           items={statusItem}
+          onSelectItem={handleChangeFilter}
           setOpen={setOpenStatusList}
           setValue={setStatus}
           setItems={setStatusItems}
           placeholder="Select the status"
           containerStyle={{ paddingBottom: 10 }}
-          onChangeValue={() => setPage(1)}
+          o
         />
         <DropDownPicker
           open={openGenderList}
           value={gender !== '' ? gender : 'Select the gender'}
           items={genderItem}
+          onSelectItem={handleChangeFilter}
           setOpen={setOpenGenderList}
           setValue={setGender}
           setItems={setGenderItems}
           placeholder="Select the gender"
-          onChangeValue={() => setPage(1)}
           zIndex={1}
         />
         <View style={styles.content}>
-        <ScrollView>
+        <ScrollView 
+          ref={scrollRef}
+          onContentSizeChange={() => scrollRef.current.scrollTo({ y : 0, animated: true })}
+        >
           {data.characters.results.map(character => (
             <CharacterCard key={character.id} data={character} />
           ))}
           {data.characters.info.pages > page && (
-            <Button title="Next Page" onPress={() => setPage(page + 1)} />
+            <Button title="Next Page" onPress={() => handleChangePage(page + 1)} />
+          )}
+          {page > 1 && (
+            <Button title="Previous Page" onPress={() => handleChangePage(page - 1)} />
           )}
         </ScrollView>
         </View>
