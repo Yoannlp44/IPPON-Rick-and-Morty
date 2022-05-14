@@ -12,16 +12,16 @@ const CharacterCard = ({ data }) => {
 
     return (
         <TouchableOpacity onPress={handlePress}>
-        <View style={styles.container}>
-            {data.image && (
-                <Image source={{ uri: data.image }} style={styles.image} />
-            )}
-            <View style={styles.details}>
-                <Text style={styles.text}>
-                    {data.name}
-                </Text>
+            <View style={styles.container}>
+                {data.image && (
+                    <Image source={{ uri: data.image }} style={styles.image} />
+                )}
+                <View style={styles.details}>
+                    <Text style={styles.text}>
+                        {data.name}
+                    </Text>
+                </View>
             </View>
-        </View>
         </TouchableOpacity>
     );
 };

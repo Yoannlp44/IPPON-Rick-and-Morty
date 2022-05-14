@@ -1,6 +1,9 @@
 import React from 'react';
-import { View, Text, SafeAreaView, Pressable, StyleSheet } from 'react-native';
+import { View, Text, SafeAreaView, Pressable, StyleSheet, Image, Dimensions } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 const CharacterPage = ({ navigation, route: { params: { data } } }) => {
 
@@ -15,11 +18,16 @@ const CharacterPage = ({ navigation, route: { params: { data } } }) => {
                     <Text>Back</Text>
                 </Pressable>
                 <View style={styles.character}>
-                    <Text>{data.name}</Text>
-                    <Text>{data.gender}</Text>
-                    <Text>{data.species}</Text>
-                    <Text>{data.status}</Text>
-                    <Text>{data.type}</Text>
+                    {data.image && (
+                        <Image source={{ uri: data.image }} style={styles.image} />
+                    )}
+                    <View style={styles.details}>
+                        <Text>Name : {data.name !== '' ? data.name : 'Unknown'}</Text>
+                        <Text>Gender : {data.gender !== '' ? data.gender : 'Unknown'}</Text>
+                        <Text>Species : {data.species !== '' ? data.species : 'Unknown'}</Text>
+                        <Text>Status : {data.status !== '' ? data.status : 'Unknown'}</Text>
+                        <Text>Type : {data.type !== '' ? data.type : 'Unknown'}</Text>
+                    </View>
                 </View>
             </SafeAreaView>
         </View>
@@ -37,10 +45,19 @@ const styles = StyleSheet.create({
         paddingEnd: 20,
         paddingTop: 50,
     },
-    character : {
+    character: {
         paddingTop: 20,
         alignItems: 'center',
-    }
+        width: width - 40,
+        height: height,
+    },
+    image: {
+        width: width - 40,
+        height: height / 2,
+    },
+    details: {
+        paddingTop: 20,
+    },
 });
 
 export default CharacterPage;
