@@ -6,5 +6,5 @@ export default {
     "android": {
         "package": "com.yourcompany.yourappname",
         "versionCode": 1
-      }
+      },
 };
