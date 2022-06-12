@@ -9,7 +9,6 @@ const CharacterPage = ({ navigation, route: { params: { data } } }) => {
 
     const handleBack = () => navigation.goBack();
 
-    console.log(data);
     return (
         <View style={styles.containerWrapper}>
             <SafeAreaView style={styles.container}>

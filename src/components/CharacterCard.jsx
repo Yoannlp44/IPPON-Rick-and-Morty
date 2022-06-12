@@ -6,7 +6,6 @@ const CharacterCard = ({ data }) => {
     const navigation = useNavigation();
 
     const handlePress = () => {
-        console.log('CharacterCard id: ', data.id);
         navigation.navigate('CharacterPage', { data: data });
     };
 

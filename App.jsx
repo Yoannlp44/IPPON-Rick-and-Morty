@@ -4,6 +4,7 @@ import { AppRegistry } from 'react-native';
 import { HttpLink } from '@apollo/client/link/http';
 import { InMemoryCache, ApolloClient, ApolloLink, ApolloProvider } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
+
 import Navigation from './src/navigation/Navigation';
 import Config from './config';
 

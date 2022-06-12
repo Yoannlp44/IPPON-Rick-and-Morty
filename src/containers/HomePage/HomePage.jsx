@@ -3,10 +3,8 @@ import { View, Text, StyleSheet, ScrollView, Dimensions, Button } from 'react-na
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { gql, useQuery } from '@apollo/client';
 import DropDownPicker from 'react-native-dropdown-picker';
+
 import CharacterCard from '../../components/CharacterCard';
-// TODO: Get all Rick and morty characters from API
-// TODO: Display all characters on screen, must be scrollable
-// TODO: Add search bar to filter characters by name, status (alive, dead, etc), species, type, gender
 
 const CharacterStatus = [
   { label: '', value: '' },
@@ -43,8 +41,7 @@ const GET_CHARACTERS = gql`
   }
   `;
 
-  const windowWidth = Dimensions.get('window').width;
-  const windowHeight = Dimensions.get('window').height;
+const windowHeight = Dimensions.get('window').height;
 
 const HomePage = () => {
   const [status, setStatus] = useState('');
@@ -62,7 +59,7 @@ const HomePage = () => {
 
   if (loading) {
     return (
-      <SafeAreaView>
+      <SafeAreaView style={styles.loading}>
         <Text>Loading...</Text>
       </SafeAreaView>
     )
@@ -70,22 +67,20 @@ const HomePage = () => {
 
   if (error) {
     return (
-      <SafeAreaView>
+      <SafeAreaView style={styles.error}>
         <Text>Error...</Text>
       </SafeAreaView>
     )
   }
 
-  console.log(loading, error, data);
-
   const handleChangeFilter = () => {
     setPage(1);
-    scrollRef.current.scrollTo({ y : 0, animated: true });
+    scrollRef.current.scrollTo({ y: 0, animated: true });
   };
-  
+
   const handleChangePage = (page) => {
     setPage(page);
-    scrollRef.current.scrollTo({ y : 0, animated: true });
+    scrollRef.current.scrollTo({ y: 0, animated: true });
   };
 
   return (
@@ -101,7 +96,6 @@ const HomePage = () => {
           setItems={setStatusItems}
           placeholder="Select the status"
           containerStyle={{ paddingBottom: 10 }}
-          o
         />
         <DropDownPicker
           open={openGenderList}
@@ -115,20 +109,20 @@ const HomePage = () => {
           zIndex={1}
         />
         <View style={styles.content}>
-        <ScrollView 
-          ref={scrollRef}
-          onContentSizeChange={() => scrollRef.current.scrollTo({ y : 0, animated: true })}
-        >
-          {data.characters.results.map(character => (
-            <CharacterCard key={character.id} data={character} />
-          ))}
-          {data.characters.info.pages > page && (
-            <Button title="Next Page" onPress={() => handleChangePage(page + 1)} />
-          )}
-          {page > 1 && (
-            <Button title="Previous Page" onPress={() => handleChangePage(page - 1)} />
-          )}
-        </ScrollView>
+          <ScrollView
+            ref={scrollRef}
+            onContentSizeChange={() => scrollRef.current.scrollTo({ y: 0, animated: true })}
+          >
+            {data.characters.results.map(character => (
+              <CharacterCard key={character.id} data={character} />
+            ))}
+            {data.characters.info.pages > page && (
+              <Button title="Next Page" onPress={() => handleChangePage(page + 1)} />
+            )}
+            {page > 1 && (
+              <Button title="Previous Page" onPress={() => handleChangePage(page - 1)} />
+            )}
+          </ScrollView>
         </View>
       </SafeAreaView>
     </View>
@@ -146,8 +140,18 @@ const styles = StyleSheet.create({
     paddingEnd: 20,
   },
   content: {
-   height: windowHeight - 200,
+    height: windowHeight - 200,
   },
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  error: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });
 
 export default HomePage;

@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
+
 import Home from '../containers/HomePage/HomePage';
 import CharacterPage from '../containers/CharacterPage/CharacterPage';
 
