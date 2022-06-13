@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     paddingEnd: 20,
   },
   content: {
-    height: windowHeight - 200,
+    height: windowHeight * 0.8,
   },
   loading: {
     flex: 1,
